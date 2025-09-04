@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MayaCode - Soluciones Digitales para PYMES Guatemaltecas</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav">
+            <div class="logo">MayaCode</div>
+            <ul class="nav-links">
+                <li><a href="#inicio">Inicio</a></li>
+                <li><a href="#productos">Productos</a></li>
+                <li><a href="#nosotros">Nosotros</a></li>
+                <li><a href="#contacto">Contacto</a></li>
+            </ul>
+            <div class="cart-icon" onclick="toggleCart()">
+                🛒 <span class="cart-count" id="cartCount">0</span>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Hero Section -->
+        <section id="inicio" class="hero">
+            <h1>Soluciones Digitales para PYMES Guatemaltecas</h1>
+            <p>Transformamos tu negocio con software especializado, desarrollo web profesional y aplicaciones móviles innovadoras.</p>
+            <a href="#productos" class="cta-button">Conoce Nuestros Productos</a>
+        </section>
+
+        <!-- Products Section -->
+        <section id="productos" class="products-section">
+            <div class="container">
+                <h2 class="section-title">Nuestros Productos</h2>
+                <div class="products-grid">
+                    <!-- Product 1: MayaERP Express -->
+                    <div class="product-card">
+                        <div class="product-icon">📊</div>
+                        <h3>MayaERP Express</h3>
+                        <div class="product-price">Q1,500 + Q800/mes</div>
+                        <p class="product-description">Sistema ERP simplificado para PYMES guatemaltecas con integración completa a sistemas fiscales locales.</p>
+                        <ul class="product-features">
+                            <li>Inventario automático en tiempo real</li>
+                            <li>Facturación electrónica (FEL) integrada</li>
+                            <li>Reportes contables automáticos</li>
+                            <li>Integración con bancos guatemaltecos</li>
+                            <li>Soporte técnico en español 24/7</li>
+                        </ul>
+                        <button class="add-to-cart" onclick="addToCart('MayaERP Express', 1500, 'erp')">
+                            Agregar al Carrito
+                        </button>
+                    </div>
+
+                    <!-- Product 2: WebStudio Guatemala -->
+                    <div class="product-card">
+                        <div class="product-icon">🌐</div>
+                        <h3>WebStudio Guatemala</h3>
+                        <div class="product-price">Q2,200 pago único</div>
+                        <p class="product-description">Constructor de sitios web con diseños exclusivos guatemaltecos y optimización SEO local.</p>
+                        <ul class="product-features">
+                            <li>50+ templates con identidad guatemalteca</li>
+                            <li>Editor drag & drop intuitivo</li>
+                            <li>SEO optimizado para Guatemala</li>
+                            <li>Integración redes sociales</li>
+                            <li>Hosting incluido por 1 año</li>
+                        </ul>
+                        <button class="add-to-cart" onclick="addToCart('WebStudio Guatemala', 2200, 'web')">
+                            Agregar al Carrito
+                        </button>
+                    </div>
+
+                    <!-- Product 3: AppBuilder Maya -->
+                    <div class="product-card">
+                        <div class="product-icon">📱</div>
+                        <h3>AppBuilder Maya</h3>
+                        <div class="product-price">Q2,500 + Q600/mes</div>
+                        <p class="product-description">Creador de aplicaciones móviles nativas sin necesidad de programación avanzada.</p>
+                        <ul class="product-features">
+                            <li>Templates por industria guatemalteca</li>
+                            <li>Push notifications avanzadas</li>
+                            <li>Analytics y métricas integradas</li>
+                            <li>Publicación automática en App Store</li>
+                            <li>Soporte para iOS y Android</li>
+                        </ul>
+                        <button class="add-to-cart" onclick="addToCart('AppBuilder Maya', 2500, 'app')">
+                            Agregar al Carrito
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="nosotros" class="about-section">
+            <div class="container">
+                <div class="about-content">
+                    <div class="about-text">
+                        <h2>Sobre MayaCode</h2>
+                        <p>Con más de 10 años de experiencia en el mercado guatemalteco, MayaCode se ha consolidado como líder en soluciones digitales para pequeñas y medianas empresas.</p>
+                        <p>Nuestra misión es democratizar la tecnología, ofreciendo herramientas empresariales de clase mundial adaptadas a la realidad y necesidades del mercado guatemalteco.</p>
+                        <p>Hemos ayudado a más de 500 empresas a digitalizar sus procesos, incrementando su productividad hasta en un 60% y mejorando su competitividad en el mercado.</p>
+                    </div>
+                    <div class="about-image">
+                        <div style="background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%); height: 300px; border-radius: 15px; display: flex; align-items: center; justify-content: center; color: white; font-size: 4rem;">
+                            🏢
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Cart Modal -->
+    <div id="cartModal" class="cart-modal">
+        <div class="cart-content">
+            <div class="cart-header">
+                <h2>Tu Carrito de Compras</h2>
+                <button class="close-cart" onclick="toggleCart()">✖</button>
+            </div>
+            <div id="cartItems"></div>
+            <div class="cart-total" id="cartTotal">Total: Q0</div>
+            <button class="checkout-btn" onclick="proceedToCheckout()">Proceder al Checkout</button>
+        </div>
+    </div>
+
+    <!-- Checkout Section -->
+    <div id="checkoutSection" class="checkout-section">
+        <h2 style="text-align: center; color: #1e3c72; margin-bottom: 2rem;">Finalizar Compra</h2>
+        <form id="checkoutForm" onsubmit="processOrder(event)">
+            <div class="form-group">
+                <label>Nombre Completo *</label>
+                <input type="text" name="nombre" required>
+            </div>
+            
+            <div class="form-group">
+                <label>Email *</label>
+                <input type="email" name="email" required>
+            </div>
+            
+            <div class="form-group">
+                <label>Teléfono *</label>
+                <input type="tel" name="telefono" required>
+            </div>
+            
+            <div class="form-group">
+                <label>Empresa</label>
+                <input type="text" name="empresa">
+            </div>
+            
+            <div class="form-group">
+                <label>Dirección *</label>
+                <input type="text" name="direccion" required>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Ciudad *</label>
+                    <input type="text" name="ciudad" required>
+                </div>
+                <div class="form-group">
+                    <label>Departamento *</label>
+                    <select name="departamento" required>
+                        <option value="">Selecciona...</option>
+                        <option value="Guatemala">Guatemala</option>
+                        <option value="Sacatepéquez">Sacatepéquez</option>
+                        <option value="Chimaltenango">Chimaltenango</option>
+                        <option value="El Progreso">El Progreso</option>
+                        <option value="Jalapa">Jalapa</option>
+                        <option value="Jutiapa">Jutiapa</option>
+                        <option value="Santa Rosa">Santa Rosa</option>
+                        <option value="Escuintla">Escuintla</option>
+                        <option value="Quetzaltenango">Quetzaltenango</option>
+                        <option value="Suchitepéquez">Suchitepéquez</option>
+                    </select>
+                </div>
+            </div>
+            
+            <h3 style="margin: 2rem 0 1rem; color: #1e3c72;">Información de Pago (Simulación)</h3>
+            
+            <div class="form-group">
+                <label>Método de Pago *</label>
+                <select name="metodoPago" required>
+                    <option value="">Selecciona...</option>
+                    <option value="tarjeta">Tarjeta de Crédito/Débito</option>
+                    <option value="transferencia">Transferencia Bancaria</option>
+                    <option value="deposito">Depósito Bancario</option>
+                </select>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Número de Tarjeta</label>
+                    <input type="text" name="numeroTarjeta" placeholder="**** **** **** ****">
+                </div>
+                <div class="form-group">
+                    <label>CVV</label>
+                    <input type="text" name="cvv" placeholder="***">
+                </div>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Mes de Vencimiento</label>
+                    <select name="mesVencimiento">
+                        <option value="">MM</option>
+                        <option value="01">01</option>
+                        <option value="02">02</option>
+                        <option value="03">03</option>
+                        <option value="04">04</option>
+                        <option value="05">05</option>
+                        <option value="06">06</option>
+                        <option value="07">07</option>
+                        <option value="08">08</option>
+                        <option value="09">09</option>
+                        <option value="10">10</option>
+                        <option value="11">11</option>
+                        <option value="12">12</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Año de Vencimiento</label>
+                    <select name="anoVencimiento">
+                        <option value="">YYYY</option>
+                        <option value="2025">2025</option>
+                        <option value="2026">2026</option>
+                        <option value="2027">2027</option>
+                        <option value="2028">2028</option>
+                        <option value="2029">2029</option>
+                        <option value="2030">2030</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="cart-total" id="checkoutTotal" style="margin: 2rem 0;"></div>
+            
+            <button type="submit" class="checkout-btn">
+                Completar Compra (Simulación)
+            </button>
+            
+            <p style="text-align: center; margin-top: 1rem; color: #666; font-size: 0.9rem;">
+                * Esta es una simulación. No se procesará ningún pago real.
+            </p>
+        </form>
+    </div>
+
+    <!-- Success Message -->
+    <div id="successMessage" class="success-message">
+        <h2>¡Compra Completada Exitosamente! ✅</h2>
+        <p>Gracias por confiar en MayaCode. Hemos recibido tu orden y nuestro equipo se pondrá en contacto contigo en las próximas 24 horas para coordinar la implementación de tus productos.</p>
+        <p><strong>Número de Orden:</strong> <span id="orderNumber"></span></p>
+        <button onclick="resetStore()" class="cta-button" style="margin-top: 1rem;">Continuar Comprando</button>
+    </div>
+
+    <!-- Footer -->
+    <footer id="contacto" class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>MayaCode Grupo 23</h3>
+                <p>Transformando negocios guatemaltecos a través de la tecnología desde 2013.</p>
+                <p>🏢 Ciudad de Guatemala, Guatemala</p>
+                <p>📞 +502 2345-6789</p>
+                <p>✉️ info@mayacode.gt</p>
+            </div>
+            <div class="footer-section">
+                <h3>Productos</h3>
+                <ul>
+                    <li><a href="#productos">MayaERP Express</a></li>
+                    <li><a href="#productos">WebStudio Guatemala</a></li>
+                    <li><a href="#productos">AppBuilder Maya</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Soporte</h3>
+                <ul>
+                    <li><a href="#">Centro de Ayuda</a></li>
+                    <li><a href="#">Documentación</a></li>
+                    <li><a href="#">Tutoriales</a></li>
+                    <li><a href="#">Contacto Técnico</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Empresa</h3>
+                <ul>
+                    <li><a href="#nosotros">Sobre Nosotros</a></li>
+                    <li><a href="#">Casos de Éxito</a></li>
+                    <li><a href="#">Carreras</a></li>
+                    <li><a href="#">Términos y Condiciones</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 MayaCode. Todos los derechos reservados. | Practica 3 - Universidad San Carlos de Guatemala</p>
+        </div>
+    </footer>
+    <script src="script.js"></script>
+
+</body>
+</html>
